@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Membership — Style 8: Midnight Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #38BDF8; --primary-soft: rgba(56,189,248,0.15); --primary-dark: #0EA5E9;
+  --bg: #0B1120; --card: #131C2E;
+  --ink: #F1F5F9; --ink-2: #CBD5E1; --ink-3: #94A3B8; --ink-4: #64748B;
+  --border: #1E293B; --border-light: #1A2335; --hover: #1A2335;
+  --green: #34D399; --green-bg: rgba(52,211,153,0.12);
+  --amber: #FBBF24; --amber-bg: rgba(251,191,36,0.12);
+  --red: #F87171; --red-bg: rgba(248,113,113,0.12);
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+
+/* SIDEBAR */
+.sidebar { background: white; border-right: 1px solid var(--border); padding: 18px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
+.sidebar-brand { padding: 0 20px 20px; border-bottom: 1px solid var(--border-light); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.sidebar-logo { width: 32px; height: 32px; border-radius: 8px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+.sidebar-name { font-size: 14px; font-weight: 700; }
+.sidebar-name small { display: block; font-size: 11px; color: var(--ink-3); font-weight: 500; margin-top: 1px; }
+.sidebar-section { padding: 0 12px; }
+.sidebar-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 7px; color: var(--ink-2); text-decoration: none; font-size: 13px; font-weight: 500; margin-bottom: 2px; cursor: pointer; transition: all 0.12s; border: none; background: transparent; width: 100%; text-align: left; font-family: inherit; }
+.sidebar-item:hover { background: var(--hover); color: var(--ink); }
+.sidebar-item.active { background: var(--primary-soft); color: var(--primary-dark); }
+.sidebar-item i { font-size: 16px; }
+.sidebar-item .badge { margin-left: auto; background: var(--red); color: white; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 100px; min-width: 18px; text-align: center; }
+.sidebar-user { margin-top: auto; padding: 12px 20px; border-top: 1px solid var(--border-light); display: flex; align-items: center; gap: 10px; }
+.sidebar-user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; }
+.sidebar-user-name { font-size: 13px; font-weight: 600; }
+.sidebar-user-id { font-size: 11px; color: var(--ink-3); font-family: 'SF Mono', monospace; }
+
+/* MAIN */
+.main { min-width: 0; }
+.topbar { background: white; border-bottom: 1px solid var(--border); padding: 16px 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.breadcrumb { font-size: 12px; color: var(--ink-3); margin-bottom: 4px; }
+.breadcrumb span { color: var(--ink); font-weight: 600; }
+.topbar h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+.btn { padding: 7px 14px; border: 1px solid var(--border); border-radius: 7px; background: white; color: var(--ink-2); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; transition: all 0.12s; }
+.btn:hover { background: var(--hover); }
+.btn.primary { background: var(--primary); color: white; border-color: transparent; }
+.btn.primary:hover { background: var(--primary-dark); }
+.btn.danger { background: var(--red); color: white; border-color: transparent; }
+.btn.success { background: var(--green); color: white; border-color: transparent; }
+.btn i { font-size: 15px; }
+.btn-icon { padding: 7px 9px; border: 1px solid var(--border); border-radius: 7px; background: white; color: var(--ink-2); cursor: pointer; }
+.btn-icon:hover { background: var(--hover); }
+
+.content { padding: 24px 28px; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 18px; }
+.page-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+.page-header p { font-size: 13px; color: var(--ink-3); }
+
+/* ALERT BANNERS */
+.banner { display: none; background: var(--red-bg); border: 1px solid #FECDCA; border-left: 4px solid var(--red); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; align-items: center; gap: 12px; }
+.banner.show { display: flex; }
+.banner.success { background: var(--green-bg); border-color: #A7F3D0; border-left-color: var(--green); }
+.banner-icon { font-size: 20px; flex-shrink: 0; }
+.banner.show:not(.success) .banner-icon { color: var(--red); }
+.banner.success .banner-icon { color: var(--green); }
+.banner-content { flex: 1; }
+.banner-title { font-size: 13px; font-weight: 700; }
+.banner.show:not(.success) .banner-title { color: var(--red); }
+.banner.success .banner-title { color: var(--green); }
+.banner-desc { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+
+/* HERO PROGRESS CARD (EMI page) */
+.hero-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border-radius: 12px; padding: 24px; margin-bottom: 16px; position: relative; overflow: hidden; }
+.hero-card::before { content: ''; position: absolute; top: -40%; right: -10%; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%); }
+.hero-content { position: relative; z-index: 1; }
+.hero-label { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 6px; }
+.hero-amount { font-size: 32px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+.hero-amount .of { font-size: 18px; color: rgba(255,255,255,0.7); font-weight: 500; }
+.hero-meta { font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 16px; }
+.hero-progress-bar { height: 8px; background: rgba(255,255,255,0.2); border-radius: 100px; overflow: hidden; margin-bottom: 8px; }
+.hero-progress-fill { height: 100%; background: white; border-radius: 100px; width: 50%; transition: width 0.5s; }
+.hero-foot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.85); }
+.hero-foot strong { color: white; font-weight: 700; }
+
+/* KPIs */
+.kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+.kpi-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.kpi-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.kpi-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.kpi-icon.blue { background: var(--primary-soft); color: var(--primary); }
+.kpi-icon.green { background: var(--green-bg); color: var(--green); }
+.kpi-icon.amber { background: var(--amber-bg); color: var(--amber); }
+.kpi-icon.red { background: var(--red-bg); color: var(--red); }
+.kpi-label { font-size: 12px; color: var(--ink-3); margin-bottom: 4px; }
+.kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.kpi-meta { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+
+/* SECTION */
+.section { background: white; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.section-head { padding: 14px 18px; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.section-head h3 { font-size: 14px; font-weight: 700; }
+.tabs { display: flex; gap: 4px; padding: 3px; background: var(--bg); border-radius: 7px; }
+.tabs button { border: none; background: transparent; padding: 5px 10px; font-size: 12px; font-weight: 600; border-radius: 5px; cursor: pointer; color: var(--ink-3); font-family: inherit; }
+.tabs button.active { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+/* EMI ITEMS */
+.emi-list { padding: 6px; }
+.emi-item { display: flex; align-items: center; gap: 14px; padding: 14px 12px; border-radius: 8px; transition: all 0.15s; }
+.emi-item:hover { background: var(--hover); }
+.emi-item + .emi-item { border-top: 1px solid var(--border-light); border-radius: 0; }
+.emi-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.emi-circle.paid { background: var(--green-bg); color: var(--green); }
+.emi-circle.due { background: var(--amber-bg); color: var(--amber); }
+.emi-circle.overdue { background: var(--red-bg); color: var(--red); }
+.emi-circle.upcoming { background: var(--bg); color: var(--ink-3); border: 2px dashed var(--border); }
+.emi-info { flex: 1; min-width: 0; }
+.emi-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.emi-meta { font-size: 12px; color: var(--ink-3); }
+.emi-meta.urgent { color: var(--red); font-weight: 600; }
+.emi-amount { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 14px; }
+.emi-action { flex-shrink: 0; }
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+.pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pill.success { background: var(--green-bg); color: var(--green); }
+.pill.warning { background: var(--amber-bg); color: var(--amber); }
+.pill.danger { background: var(--red-bg); color: var(--red); }
+.pill.neutral { background: var(--hover); color: var(--ink-3); }
+.pay-btn { padding: 6px 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.pay-btn:hover { background: var(--primary-dark); }
+.pay-btn.urgent { background: var(--red); }
+.link-btn { padding: 6px 12px; background: white; color: var(--primary); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+.link-btn:hover { background: var(--primary-soft); border-color: var(--primary); }
+
+/* REMINDERS */
+.reminder-list { padding: 4px 0; }
+.reminder-item { padding: 14px 18px; border-bottom: 1px solid var(--border-light); display: flex; gap: 12px; }
+.reminder-item:last-child { border-bottom: none; }
+.reminder-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.reminder-icon.amber { background: var(--amber-bg); color: var(--amber); }
+.reminder-icon.red { background: var(--red-bg); color: var(--red); }
+.reminder-icon.blue { background: var(--primary-soft); color: var(--primary); }
+.reminder-icon.green { background: var(--green-bg); color: var(--green); }
+.reminder-content { flex: 1; min-width: 0; }
+.reminder-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.reminder-desc { font-size: 12px; color: var(--ink-3); margin-bottom: 6px; }
+.reminder-time { font-size: 11px; color: var(--ink-4); }
+.reminder-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* PAYMENT LINKS */
+.link-card { padding: 14px 18px; border-bottom: 1px solid var(--border-light); }
+.link-card:last-child { border-bottom: none; }
+.link-card-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.link-card-info { flex: 1; min-width: 0; }
+.link-card-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; display: flex; align-items: center; gap: 8px; }
+.link-card-meta { font-size: 12px; color: var(--ink-3); }
+.link-card-amount { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.copy-field { display: flex; gap: 6px; align-items: center; padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; font-size: 12px; font-family: 'SF Mono', monospace; margin-top: 10px; }
+.copy-field input { flex: 1; border: none; background: transparent; outline: none; color: var(--ink-2); font-family: inherit; }
+.copy-field button { padding: 4px 10px; border: 1px solid var(--border); border-radius: 5px; background: white; cursor: pointer; font-size: 11px; font-weight: 600; font-family: inherit; }
+.copy-field button:hover { background: var(--hover); }
+
+/* SETTINGS */
+.settings-list { padding: 4px 0; }
+.settings-row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--border-light); }
+.settings-row:last-child { border-bottom: none; }
+.settings-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.settings-info { flex: 1; }
+.settings-title { font-size: 13px; font-weight: 600; }
+.settings-desc { font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+.toggle { width: 38px; height: 22px; background: var(--border); border-radius: 100px; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+.toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: white; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.15); transition: transform 0.2s; }
+.toggle.on { background: var(--primary); }
+.toggle.on::after { transform: translateX(16px); }
+
+.form-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+.form-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+.form-group { margin-bottom: 12px; }
+.form-label { display: block; font-size: 12px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
+.form-input, .form-select, .form-textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 7px; font-size: 13px; font-family: inherit; background: white; color: var(--ink); }
+.form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+.form-textarea { resize: vertical; min-height: 80px; }
+
+/* SUPPORT GRID */
+.support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.support-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 22px 16px; text-align: center; cursor: pointer; transition: all 0.15s; text-decoration: none; color: var(--ink); display: block; }
+.support-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.support-card-icon { width: 48px; height: 48px; margin: 0 auto 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.support-card-icon.green { background: var(--green-bg); color: var(--green); }
+.support-card-icon.blue { background: var(--primary-soft); color: var(--primary); }
+.support-card-icon.amber { background: var(--amber-bg); color: var(--amber); }
+.support-card-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.support-card-desc { font-size: 11px; color: var(--ink-3); }
+
+/* MODAL */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.18s; }
+.modal-backdrop.show { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal { background: white; border-radius: 12px; box-shadow: 0 20px 40px rgba(15,23,42,0.18); max-width: 460px; width: 100%; max-height: 90vh; overflow-y: auto; }
+.modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.modal-header h3 { font-size: 15px; font-weight: 700; }
+.modal-close { width: 28px; height: 28px; border: none; background: transparent; border-radius: 6px; color: var(--ink-3); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { background: var(--hover); }
+.modal-body { padding: 20px; }
+.modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; background: var(--bg); }
+.modal-amount { text-align: center; padding: 8px 0 16px; }
+.modal-amount-label { font-size: 12px; color: var(--ink-3); margin-bottom: 4px; }
+.modal-amount-value { font-size: 32px; font-weight: 700; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+.receipt-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--border-light); }
+.receipt-row:last-child { border-bottom: none; }
+.receipt-row.total { padding-top: 12px; margin-top: 6px; border-top: 1px solid var(--ink); border-bottom: none; font-weight: 700; }
+.receipt-row .label { color: var(--ink-3); }
+.receipt-row .value { font-weight: 600; }
+
+/* TOAST */
+.toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+.toast { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; box-shadow: 0 8px 20px rgba(15,23,42,0.1); display: flex; align-items: center; gap: 10px; min-width: 280px; max-width: 360px; animation: toastIn 0.25s; }
+@keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.toast.removing { animation: toastOut 0.2s forwards; }
+@keyframes toastOut { to { opacity: 0; transform: translateY(8px); } }
+.toast-icon { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.toast.success .toast-icon { background: var(--green-bg); color: var(--green); }
+.toast.error .toast-icon { background: var(--red-bg); color: var(--red); }
+.toast.info .toast-icon { background: var(--primary-soft); color: var(--primary); }
+.toast-title { font-size: 13px; font-weight: 600; }
+.toast-msg { font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+
+@media (max-width: 1100px) { .kpi-grid { grid-template-columns: 1fr; } .support-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { body { grid-template-columns: 1fr; } .sidebar { display: none; } }
+
+
+/* PAYMENT METHODS */
+.payment-methods { margin-bottom: 14px; }
+.payment-methods-label { font-size: 12px; font-weight: 600; color: var(--ink-2); margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.04em; }
+.payment-method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.payment-method { padding: 12px 14px; border: 2px solid var(--border); border-radius: 8px; background: white; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 10px; font-family: inherit; text-align: left; width: 100%; }
+.payment-method:hover { border-color: var(--ink-4); background: var(--hover); }
+.payment-method.selected { border-color: var(--primary); background: var(--primary-soft); }
+.payment-method-icon { width: 32px; height: 32px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.payment-method.selected .payment-method-icon { background: var(--primary); color: white; }
+.payment-method-info { flex: 1; min-width: 0; }
+.payment-method-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 1px; }
+.payment-method-meta { font-size: 11px; color: var(--ink-3); }
+.payment-method-check { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.payment-method.selected .payment-method-check { border-color: var(--primary); background: var(--primary); color: white; }
+.payment-method.selected .payment-method-check::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; }
+
+/* UPI INPUT INLINE */
+.payment-detail-form { display: none; padding: 12px; background: var(--bg); border: 1px solid var(--border-light); border-radius: 8px; margin-top: 10px; }
+.payment-detail-form.show { display: block; }
+.payment-detail-form .form-input { margin-bottom: 0; }
+
+/* SAVED CARDS */
+.saved-card { padding: 10px 12px; border: 1px solid var(--border-light); border-radius: 7px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; background: white; cursor: pointer; }
+.saved-card:hover { border-color: var(--ink-4); }
+.saved-card.selected { border-color: var(--primary); background: var(--primary-soft); }
+.saved-card-brand { width: 36px; height: 24px; border-radius: 4px; background: linear-gradient(135deg, #1A1F36, #424770); color: white; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; }
+.saved-card-info { flex: 1; }
+.saved-card-num { font-size: 13px; font-weight: 600; font-family: 'SF Mono', monospace; }
+.saved-card-meta { font-size: 11px; color: var(--ink-3); }
+
+/* THEME OVERRIDES */
+
+/* MIDNIGHT PRO - full dark mode */
+body { background: #0B1120; }
+.sidebar { background: #0B1120; border-right: 1px solid #1E293B; }
+.sidebar-brand { border-bottom-color: #1E293B; }
+.sidebar-logo { background: linear-gradient(135deg, #38BDF8, #818CF8); box-shadow: 0 4px 14px rgba(56,189,248,0.4); border-radius: 8px; }
+.sidebar-item { color: #94A3B8; }
+.sidebar-item:hover { background: #1A2335; color: #F1F5F9; }
+.sidebar-item.active { background: rgba(56,189,248,0.15); color: #38BDF8; }
+.sidebar-user { border-top-color: #1E293B; }
+.sidebar-user-avatar { background: linear-gradient(135deg, #38BDF8, #818CF8); }
+.sidebar-user-id { color: #64748B; }
+.topbar { background: #0B1120; border-bottom: 1px solid #1E293B; }
+.btn { background: #131C2E; border-color: #1E293B; color: #CBD5E1; }
+.btn:hover { background: #1A2335; }
+.btn.primary { background: linear-gradient(135deg, #38BDF8, #0EA5E9); border-color: transparent; color: #0B1120; box-shadow: 0 4px 12px rgba(56,189,248,0.3); }
+.btn-icon { background: #131C2E; border-color: #1E293B; color: #CBD5E1; }
+.hero-card { background: linear-gradient(135deg, #1E293B 0%, #312E81 50%, #0EA5E9 200%); }
+.kpi-card { background: #131C2E; border-color: #1E293B; }
+.section { background: #131C2E; border-color: #1E293B; }
+.section-head { border-bottom-color: #1E293B; }
+.tabs { background: #0B1120; }
+.tabs button.active { background: #1E293B; color: #F1F5F9; box-shadow: none; }
+.emi-item:hover { background: #1A2335; }
+.emi-item + .emi-item { border-top-color: #1E293B; }
+.emi-circle.upcoming { background: #0B1120; border-color: #1E293B; }
+.reminder-item { border-bottom-color: #1E293B; }
+.link-card { border-bottom-color: #1E293B; }
+.copy-field { background: #0B1120; border-color: #1E293B; }
+.copy-field input { color: #CBD5E1; }
+.copy-field button { background: #131C2E; border-color: #1E293B; color: #CBD5E1; }
+.settings-row { border-bottom-color: #1E293B; }
+.settings-icon { background: rgba(56,189,248,0.15); color: #38BDF8; }
+.support-card { background: #131C2E; border-color: #1E293B; }
+.support-card:hover { border-color: #38BDF8; }
+.form-card { background: #131C2E; border-color: #1E293B; }
+.form-input, .form-select, .form-textarea { background: #0B1120; border-color: #1E293B; color: #F1F5F9; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #38BDF8; box-shadow: 0 0 0 3px rgba(56,189,248,0.15); }
+.toggle { background: #1E293B; }
+.toggle.on { background: #38BDF8; }
+.modal { background: #131C2E; border: 1px solid #1E293B; }
+.modal-header { border-bottom-color: #1E293B; }
+.modal-footer { border-top-color: #1E293B; background: #0B1120; }
+.toast { background: #131C2E; border-color: #1E293B; }
+.toast-title { color: #F1F5F9; }
+.kpi-icon.blue { background: rgba(56,189,248,0.15); color: #38BDF8; }
+.support-card-icon.blue { background: rgba(56,189,248,0.15); color: #38BDF8; }
+.banner { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3); border-left-color: #F87171; }
+.banner.success { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.3); border-left-color: #34D399; }
+
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">D</div>
+    <div class="sidebar-name">Diamond Member<small>Style 8 — Midnight</small></div>
+  </div>
+  <div class="sidebar-section">
+    <button class="sidebar-item active" data-page="emi"><i class="ti ti-credit-card"></i> EMI Tracking <span class="badge" id="badge-emi">1</span></button>
+    <button class="sidebar-item" data-page="reminders"><i class="ti ti-bell"></i> Reminders <span class="badge" id="badge-rem">2</span></button>
+    <button class="sidebar-item" data-page="links"><i class="ti ti-link"></i> Payment Links</button>
+    <button class="sidebar-item" data-page="settings"><i class="ti ti-settings"></i> Settings</button>
+    <button class="sidebar-item" data-page="support"><i class="ti ti-headset"></i> Contact Support</button>
+  </div>
+  <div class="sidebar-user">
+    <div class="sidebar-user-avatar">PS</div>
+    <div>
+      <div class="sidebar-user-name">Priya Sharma</div>
+      <div class="sidebar-user-id">DM-2026-04891</div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="breadcrumb">My Account · <span id="bc-current">EMI Tracking</span></div>
+      <h1 id="page-title">EMI Tracking</h1>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-icon" title="Notifications"><i class="ti ti-bell"></i></button>
+      <button class="btn primary" id="topbar-pay" onclick="openPayModal()"><i class="ti ti-credit-card"></i> Pay Now</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ════════════════ EMI TRACKING ════════════════ -->
+    <div class="page active" id="page-emi">
+      <!-- ALERT (locked) -->
+      <div class="banner" id="banner-alert">
+        <i class="ti ti-alert-triangle banner-icon"></i>
+        <div class="banner-content">
+          <div class="banner-title">Payment overdue</div>
+          <div class="banner-desc">EMI 4 of ₹5,000 has been overdue. Please settle to continue your benefits.</div>
+        </div>
+        <button class="btn danger" onclick="openPayModal()">Pay Now</button>
+      </div>
+      <div class="banner success" id="banner-success">
+        <i class="ti ti-circle-check banner-icon"></i>
+        <div class="banner-content">
+          <div class="banner-title">All paid up!</div>
+          <div class="banner-desc">Your membership is fully settled. Thank you, Priya.</div>
+        </div>
+      </div>
+
+      <!-- HERO PROGRESS CARD -->
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="hero-label">Repayment Progress</div>
+          <div class="hero-amount"><span id="hero-paid">₹15,000</span> <span class="of">/ ₹30,000</span></div>
+          <div class="hero-meta" id="hero-meta">3 of 6 EMIs paid · ₹15,000 remaining</div>
+          <div class="hero-progress-bar"><div class="hero-progress-fill" id="hero-fill"></div></div>
+          <div class="hero-foot">
+            <span id="hero-foot-l"><strong>50%</strong> complete</span>
+            <span id="hero-foot-r">Diamond · 6-month plan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-head"><div class="kpi-icon green"><i class="ti ti-check"></i></div></div>
+          <div class="kpi-label">Paid</div>
+          <div class="kpi-value" id="kpi-paid">₹15,000</div>
+          <div class="kpi-meta" id="kpi-paid-meta">3 EMIs cleared</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-head"><div class="kpi-icon amber" id="kpi-out-icon"><i class="ti ti-clock"></i></div></div>
+          <div class="kpi-label" id="kpi-out-label">Outstanding</div>
+          <div class="kpi-value" id="kpi-out">₹15,000</div>
+          <div class="kpi-meta" id="kpi-out-meta">3 EMIs remaining</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-head"><div class="kpi-icon blue"><i class="ti ti-calendar-event"></i></div></div>
+          <div class="kpi-label" id="kpi-next-label">Next Due</div>
+          <div class="kpi-value" id="kpi-next">May 15</div>
+          <div class="kpi-meta" id="kpi-next-meta">₹5,000 · in 9 days</div>
+        </div>
+      </div>
+
+      <!-- INSTALLMENTS -->
+      <div class="section">
+        <div class="section-head">
+          <h3>My Installments</h3>
+          <div class="tabs" id="emi-tabs">
+            <button class="active" data-filter="all">All</button>
+            <button data-filter="pending">Pending</button>
+            <button data-filter="paid">Paid</button>
+          </div>
+        </div>
+        <div id="emi-list" class="emi-list"></div>
+      </div>
+    </div>
+
+    <!-- ════════════════ REMINDERS ════════════════ -->
+    <div class="page" id="page-reminders">
+      <div class="page-header">
+        <h2>My Reminders</h2>
+        <p>Notifications from your membership team about upcoming and overdue payments.</p>
+      </div>
+      <div class="section">
+        <div class="section-head">
+          <h3>Recent Reminders</h3>
+          <button class="btn"><i class="ti ti-mail-opened"></i> Mark all read</button>
+        </div>
+        <div class="reminder-list" id="reminder-list"></div>
+      </div>
+    </div>
+
+    <!-- ════════════════ PAYMENT LINKS ════════════════ -->
+    <div class="page" id="page-links">
+      <div class="page-header">
+        <h2>Payment Links</h2>
+        <p>Custom payment links shared with you. Click to pay securely via SkyStreet.</p>
+      </div>
+      <div class="section">
+        <div class="section-head">
+          <h3>Active Payment Links</h3>
+        </div>
+        <div id="links-list"></div>
+      </div>
+    </div>
+
+    <!-- ════════════════ SETTINGS ════════════════ -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <h2>Settings</h2>
+        <p>Manage your notification preferences and account details.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>Notifications</h3></div>
+        <div class="settings-list">
+          <div class="settings-row">
+            <div class="settings-icon"><i class="ti ti-mail"></i></div>
+            <div class="settings-info">
+              <div class="settings-title">Email reminders</div>
+              <div class="settings-desc">Receive payment reminders to priya@example.com</div>
+            </div>
+            <div class="toggle on" data-setting="email"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-icon"><i class="ti ti-message"></i></div>
+            <div class="settings-info">
+              <div class="settings-title">SMS reminders</div>
+              <div class="settings-desc">Get SMS 3 days before EMI due date</div>
+            </div>
+            <div class="toggle on" data-setting="sms"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-icon"><i class="ti ti-brand-whatsapp"></i></div>
+            <div class="settings-info">
+              <div class="settings-title">WhatsApp reminders</div>
+              <div class="settings-desc">Reminders to +91 99999 99999</div>
+            </div>
+            <div class="toggle on" data-setting="wa"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>Auto-pay</h3></div>
+        <div class="settings-list">
+          <div class="settings-row">
+            <div class="settings-icon"><i class="ti ti-refresh"></i></div>
+            <div class="settings-info">
+              <div class="settings-title">Auto-debit EMIs</div>
+              <div class="settings-desc">Automatically pay EMIs from your saved payment method</div>
+            </div>
+            <div class="toggle" data-setting="autopay"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Profile information</h3>
+        <div class="form-group">
+          <label class="form-label">Full name</label>
+          <input class="form-input" value="Priya Sharma">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" value="priya@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" value="+91 99999 99999">
+        </div>
+        <button class="btn primary"><i class="ti ti-check"></i> Save changes</button>
+      </div>
+    </div>
+
+    <!-- ════════════════ CONTACT SUPPORT ════════════════ -->
+    <div class="page" id="page-support">
+      <div class="page-header">
+        <h2>Contact Support</h2>
+        <p>Get help with your membership. Our team is available Mon–Sat, 9 AM to 6 PM.</p>
+      </div>
+      <div class="support-grid">
+        <a class="support-card" href="https://wa.me/919999999999" target="_blank">
+          <div class="support-card-icon green"><i class="ti ti-brand-whatsapp"></i></div>
+          <div class="support-card-title">WhatsApp</div>
+          <div class="support-card-desc">~30 minute response</div>
+        </a>
+        <a class="support-card" href="tel:+919999999999">
+          <div class="support-card-icon blue"><i class="ti ti-phone"></i></div>
+          <div class="support-card-title">Call Us</div>
+          <div class="support-card-desc">+91 99999 99999</div>
+        </a>
+        <a class="support-card" href="mailto:support@yourbrand.com">
+          <div class="support-card-icon amber"><i class="ti ti-mail"></i></div>
+          <div class="support-card-title">Email</div>
+          <div class="support-card-desc">Within 24 hours</div>
+        </a>
+      </div>
+      <div class="form-card">
+        <h3>Submit a ticket</h3>
+        <form id="support-form">
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input class="form-input" required placeholder="What's your question about?">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" required>
+              <option value="">Select a category</option>
+              <option>Payment issue</option>
+              <option>Receipt request</option>
+              <option>Plan modification</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" required placeholder="Describe your issue..."></textarea>
+          </div>
+          <button type="submit" class="btn primary"><i class="ti ti-send"></i> Submit ticket</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- DEMO STATE TOGGLE (top right floating) -->
+<div style="position: fixed; top: 14px; right: 14px; z-index: 50; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; gap: 2px;">
+  <button class="state-btn active" data-state="active" style="border:none; background:transparent; padding:5px 10px; font-size:11px; font-weight:600; border-radius:5px; cursor:pointer; font-family:inherit; color:var(--ink-3);">Active</button>
+  <button class="state-btn" data-state="locked" style="border:none; background:transparent; padding:5px 10px; font-size:11px; font-weight:600; border-radius:5px; cursor:pointer; font-family:inherit; color:var(--ink-3);">Pending</button>
+  <button class="state-btn" data-state="settled" style="border:none; background:transparent; padding:5px 10px; font-size:11px; font-weight:600; border-radius:5px; cursor:pointer; font-family:inherit; color:var(--ink-3);">Settled</button>
+</div>
+
+<!-- PAY MODAL -->
+<div class="modal-backdrop" id="modal-pay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Confirm Payment</h3>
+      <button class="modal-close" data-close><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-amount">
+        <div class="modal-amount-label" id="pay-modal-desc">EMI 4 · Due May 15, 2026</div>
+        <div class="modal-amount-value" id="pay-modal-amount">₹5,000</div>
+      </div>
+      <div style="background: var(--bg); border: 1px solid var(--border-light); border-radius: 8px; padding: 14px;">
+        <div class="receipt-row"><span class="label">Payment for</span><span class="value" id="pay-modal-for">EMI 4</span></div>
+        <div class="receipt-row"><span class="label">Due date</span><span class="value" id="pay-modal-date">May 15, 2026</span></div>
+        <div class="receipt-row"><span class="label">Processing fee</span><span class="value" style="color: var(--green);">Free</span></div>
+        <div class="receipt-row total"><span class="label">Total</span><span class="value" id="pay-modal-total">₹5,000.00</span></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 10px; background: var(--primary-soft); border-radius: 7px; font-size: 12px; color: var(--primary-dark); margin-top: 12px;">
+        <i class="ti ti-shield-check" style="font-size: 16px;"></i>
+        Secured by SkyStreet · 256-bit encryption
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-close>Cancel</button>
+      <button class="btn primary" id="confirm-pay-btn">Continue to payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div class="modal-backdrop" id="modal-receipt">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Payment Receipt</h3>
+      <button class="modal-close" data-close><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-amount">
+        <div class="modal-amount-label" id="receipt-emi-label">EMI 03 · Paid</div>
+        <div class="modal-amount-value" id="receipt-amount">₹5,000.00</div>
+      </div>
+      <div style="background: var(--bg); border: 1px solid var(--border-light); border-radius: 8px; padding: 14px;">
+        <div class="receipt-row"><span class="label">Paid on</span><span class="value" id="receipt-date">Apr 15, 2026</span></div>
+        <div class="receipt-row"><span class="label">Transaction ID</span><span class="value" id="receipt-txn" style="font-family: 'SF Mono', monospace; font-size: 12px;">sk_5447</span></div>
+        <div class="receipt-row"><span class="label">Payment method</span><span class="value">UPI</span></div>
+        <div class="receipt-row"><span class="label">Status</span><span class="value" style="color: var(--green);">Paid</span></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-close>Close</button>
+      <button class="btn primary" id="download-receipt-btn"><i class="ti ti-download"></i> Download PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const fmt = n => '₹' + n.toLocaleString('en-IN');
+const fmtFull = n => '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+let state = 'active';
+let emiFilter = 'all';
+
+const baseEmis = [
+  { id: 1, num: 'EMI 1', amount: 5000, date: 'Feb 15, 2026', txn: 'sk_4821', status: 'paid' },
+  { id: 2, num: 'EMI 2', amount: 5000, date: 'Mar 15, 2026', txn: 'sk_5102', status: 'paid' },
+  { id: 3, num: 'EMI 3', amount: 5000, date: 'Apr 15, 2026', txn: 'sk_5447', status: 'paid' },
+  { id: 4, num: 'EMI 4', amount: 5000, date: 'May 15, 2026', status: 'due' },
+  { id: 5, num: 'EMI 5', amount: 5000, date: 'Jun 15, 2026', status: 'scheduled' },
+  { id: 6, num: 'EMI 6', amount: 5000, date: 'Jul 15, 2026', status: 'scheduled' }
+];
+
+const reminders = [
+  { type: 'amber', icon: 'ti-clock', title: 'EMI 4 due in 9 days', desc: '₹5,000 due on May 15, 2026', time: '2 hours ago', actions: ['Pay now', 'Snooze'] },
+  { type: 'blue', icon: 'ti-link', title: 'Payment link sent', desc: 'A custom payment link was sent for EMI 4', time: 'Yesterday', actions: ['Open link'] },
+  { type: 'green', icon: 'ti-check', title: 'Payment received', desc: 'EMI 3 of ₹5,000 confirmed', time: 'Apr 15, 2026', actions: ['View receipt'] },
+  { type: 'green', icon: 'ti-check', title: 'Payment received', desc: 'EMI 2 of ₹5,000 confirmed', time: 'Mar 15, 2026', actions: ['View receipt'] }
+];
+
+const myLinks = [
+  { title: 'EMI 4 — May 2026', desc: 'Sent on May 4, 2026 · Expires May 11', amount: 5000, status: 'active', url: 'https://pay.skystreet.com/dm/abc123' },
+  { title: 'EMI 3 — Apr 2026', desc: 'Paid on Apr 15, 2026', amount: 5000, status: 'paid', url: 'https://pay.skystreet.com/dm/xyz789' }
+];
+
+function toast(type, title, msg) {
+  const icons = { success: 'ti-check', error: 'ti-x', info: 'ti-info-circle' };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<div class="toast-icon"><i class="ti ${icons[type]}"></i></div><div style="flex:1;"><div class="toast-title">${title}</div>${msg ? `<div class="toast-msg">${msg}</div>` : ''}</div>`;
+  $('#toast-container').appendChild(el);
+  setTimeout(() => { el.classList.add('removing'); setTimeout(() => el.remove(), 200); }, 3000);
+}
+
+function getEmis() {
+  if (state === 'settled') return [{ id: 0, num: 'Full payment', amount: 30000, date: 'May 5, 2026', txn: 'sk_6892', status: 'lump' }];
+  const emis = JSON.parse(JSON.stringify(baseEmis));
+  if (state === 'locked') { emis[3].status = 'overdue'; emis[3].date = 'May 10, 2026'; }
+  return emis;
+}
+
+function emiHtml(e) {
+  const isPaid = e.status === 'paid' || e.status === 'lump';
+  let circleClass = 'upcoming', circleContent = e.num.replace('EMI ', '');
+  let metaText = '', metaClass = '';
+  let actionHtml = '<span style="color: var(--ink-4); font-size: 12px;">—</span>';
+  let pillHtml = '';
+
+  if (e.status === 'paid' || e.status === 'lump') {
+    circleClass = 'paid'; circleContent = '<i class="ti ti-check"></i>';
+    metaText = `Paid on ${e.date} · ${e.txn || ''}`;
+    pillHtml = e.status === 'lump' ? '<span class="pill success">Settled</span>' : '<span class="pill success">Paid</span>';
+    actionHtml = `<button class="link-btn" onclick="openReceipt(${e.id})"><i class="ti ti-receipt"></i> Receipt</button>`;
+  } else if (e.status === 'due') {
+    circleClass = 'due';
+    metaText = `Due ${e.date}`;
+    pillHtml = '<span class="pill warning">Due in 9 days</span>';
+    actionHtml = `<button class="pay-btn" onclick="openPayModal(${e.id})">Pay now</button>`;
+  } else if (e.status === 'overdue') {
+    circleClass = 'overdue';
+    metaText = `Overdue since ${e.date}`;
+    metaClass = 'urgent';
+    pillHtml = '<span class="pill danger">Overdue</span>';
+    actionHtml = `<button class="pay-btn urgent" onclick="openPayModal(${e.id})">Pay now</button>`;
+  } else {
+    metaText = `Scheduled for ${e.date}`;
+    pillHtml = '<span class="pill neutral">Scheduled</span>';
+  }
+
+  return `<div class="emi-item">
+    <div class="emi-circle ${circleClass}">${circleContent}</div>
+    <div class="emi-info">
+      <div class="emi-title">${e.num} · <span class="emi-amount">${fmt(e.amount)}</span></div>
+      <div class="emi-meta ${metaClass}">${metaText}</div>
+    </div>
+    <div>${pillHtml}</div>
+    <div class="emi-action">${actionHtml}</div>
+  </div>`;
+}
+
+function renderEmis() {
+  let emis = getEmis();
+  if (emiFilter === 'pending') emis = emis.filter(e => e.status !== 'paid' && e.status !== 'lump');
+  if (emiFilter === 'paid') emis = emis.filter(e => e.status === 'paid' || e.status === 'lump');
+  if (emis.length === 0) {
+    $('#emi-list').innerHTML = '<div style="padding: 40px; text-align: center; color: var(--ink-3); font-size: 13px;">No installments to show.</div>';
+    return;
+  }
+  $('#emi-list').innerHTML = emis.map(e => emiHtml(e)).join('');
+}
+
+function renderReminders() {
+  $('#reminder-list').innerHTML = reminders.map(r => `
+    <div class="reminder-item">
+      <div class="reminder-icon ${r.type}"><i class="ti ${r.icon}"></i></div>
+      <div class="reminder-content">
+        <div class="reminder-title">${r.title}</div>
+        <div class="reminder-desc">${r.desc}</div>
+        <div class="reminder-time">${r.time}</div>
+      </div>
+      <div class="reminder-actions">
+        ${r.actions.map(a => `<button class="link-btn" onclick="toast('info','${a} clicked')">${a}</button>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderLinks() {
+  $('#links-list').innerHTML = myLinks.map((l, i) => `
+    <div class="link-card">
+      <div class="link-card-row">
+        <div class="link-card-info">
+          <div class="link-card-title">${l.title} ${l.status === 'paid' ? '<span class="pill success">Paid</span>' : '<span class="pill warning">Active</span>'}</div>
+          <div class="link-card-meta">${l.desc}</div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div class="link-card-amount">${fmt(l.amount)}</div>
+          ${l.status === 'active' ? `<button class="btn primary" onclick="openPayModal(4)"><i class="ti ti-credit-card"></i> Pay</button>` : `<button class="link-btn" onclick="openReceipt(3)"><i class="ti ti-receipt"></i> Receipt</button>`}
+        </div>
+      </div>
+      ${l.status === 'active' ? `<div class="copy-field"><input value="${l.url}" readonly id="link-${i}"><button onclick="copyLink(${i})">Copy</button></div>` : ''}
+    </div>
+  `).join('');
+}
+
+function navigate(page) {
+  $$('.page').forEach(p => p.classList.remove('active'));
+  $(`#page-${page}`).classList.add('active');
+  $$('.sidebar-item').forEach(b => b.classList.toggle('active', b.dataset.page === page));
+  const titles = { emi: 'EMI Tracking', reminders: 'My Reminders', links: 'Payment Links', settings: 'Settings', support: 'Contact Support' };
+  $('#page-title').textContent = titles[page];
+  $('#bc-current').textContent = titles[page];
+  if (page === 'emi') renderEmis();
+  if (page === 'reminders') renderReminders();
+  if (page === 'links') renderLinks();
+}
+
+function openPayModal(emiId) {
+  const emis = getEmis();
+  let e = emiId ? emis.find(x => x.id === emiId) : emis.find(x => x.status === 'due' || x.status === 'overdue');
+  if (!e) { toast('info', 'Nothing to pay', 'You\'re all caught up!'); return; }
+  $('#pay-modal-amount').textContent = fmt(e.amount);
+  $('#pay-modal-desc').textContent = `${e.num} · Due ${e.date}`;
+  $('#pay-modal-for').textContent = e.num;
+  $('#pay-modal-date').textContent = e.date;
+  $('#pay-modal-total').textContent = fmtFull(e.amount);
+  $('#confirm-pay-btn').innerHTML = `<i class="ti ti-lock"></i> Pay ${fmt(e.amount)}`;
+  $('#pay-modal-method').textContent = paymentMethodNames[selectedPaymentMethod];
+  $('#modal-pay').classList.add('show');
+}
+
+function openReceipt(emiId) {
+  const e = getEmis().find(x => x.id === emiId) || baseEmis.find(x => x.id === emiId);
+  if (!e) return;
+  $('#receipt-emi-label').textContent = `${e.num} · Paid`;
+  $('#receipt-amount').textContent = fmtFull(e.amount);
+  $('#receipt-date').textContent = e.date;
+  $('#receipt-txn').textContent = e.txn || 'sk_xxxx';
+  $('#modal-receipt').classList.add('show');
+}
+
+function copyLink(i) {
+  const v = $(`#link-${i}`).value;
+  navigator.clipboard.writeText(v);
+  toast('success', 'Link copied', 'Paste it anywhere to share');
+}
+
+function setState(s) {
+  state = s;
+  $$('.state-btn').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+  $$('.state-btn').forEach(b => { if (b.classList.contains('active')) { b.style.background = 'var(--ink)'; b.style.color = 'white'; } else { b.style.background = 'transparent'; b.style.color = 'var(--ink-3)'; } });
+
+  $('#banner-alert').classList.toggle('show', s === 'locked');
+  $('#banner-success').classList.toggle('show', s === 'settled');
+
+  if (s === 'settled') {
+    $('#hero-paid').textContent = '₹30,000';
+    $('#hero-fill').style.width = '100%';
+    $('#hero-foot-l').innerHTML = '<strong>100%</strong> complete';
+    $('#hero-meta').textContent = 'Fully settled · Thank you!';
+    $('#kpi-paid').textContent = '₹30,000'; $('#kpi-paid-meta').textContent = 'Fully settled';
+    $('#kpi-out').textContent = '₹0'; $('#kpi-out-meta').textContent = 'Nothing due'; $('#kpi-out-icon').className = 'kpi-icon green';
+    $('#kpi-next').textContent = '—'; $('#kpi-next-meta').textContent = 'No upcoming dues';
+    $('#topbar-pay').style.display = 'none';
+    $('#badge-emi').style.display = 'none';
+  } else if (s === 'locked') {
+    $('#hero-paid').textContent = '₹15,000';
+    $('#hero-fill').style.width = '50%';
+    $('#hero-foot-l').innerHTML = '<strong>50%</strong> complete';
+    $('#hero-meta').textContent = '3 of 6 EMIs paid · ₹5,000 overdue';
+    $('#kpi-paid').textContent = '₹15,000'; $('#kpi-paid-meta').textContent = '3 EMIs cleared';
+    $('#kpi-out').textContent = '₹15,000'; $('#kpi-out-meta').textContent = '⚠ ₹5,000 overdue'; $('#kpi-out-icon').className = 'kpi-icon red';
+    $('#kpi-next').textContent = 'Overdue'; $('#kpi-next-meta').textContent = '₹5,000 since May 10';
+    $('#topbar-pay').style.display = '';
+    $('#badge-emi').style.display = '';
+    $('#badge-emi').textContent = '!';
+    $('#badge-emi').style.background = 'var(--red)';
+  } else {
+    $('#hero-paid').textContent = '₹15,000';
+    $('#hero-fill').style.width = '50%';
+    $('#hero-foot-l').innerHTML = '<strong>50%</strong> complete';
+    $('#hero-meta').textContent = '3 of 6 EMIs paid · ₹15,000 remaining';
+    $('#kpi-paid').textContent = '₹15,000'; $('#kpi-paid-meta').textContent = '3 EMIs cleared';
+    $('#kpi-out').textContent = '₹15,000'; $('#kpi-out-meta').textContent = '3 EMIs remaining'; $('#kpi-out-icon').className = 'kpi-icon amber';
+    $('#kpi-next').textContent = 'May 15'; $('#kpi-next-meta').textContent = '₹5,000 · in 9 days';
+    $('#topbar-pay').style.display = '';
+    $('#badge-emi').style.display = '';
+    $('#badge-emi').textContent = '1';
+  }
+  renderEmis();
+}
+
+// Events
+$$('.sidebar-item').forEach(b => b.addEventListener('click', () => navigate(b.dataset.page)));
+$('#emi-tabs').addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON') {
+    $$('#emi-tabs button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    emiFilter = e.target.dataset.filter;
+    renderEmis();
+  }
+});
+$$('.state-btn').forEach(b => b.addEventListener('click', () => setState(b.dataset.state)));
+$('#confirm-pay-btn').addEventListener('click', () => {
+  const btn = $('#confirm-pay-btn');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2" style="animation: spin 1s linear infinite;"></i> Processing…';
+  setTimeout(() => {
+    $('#modal-pay').classList.remove('show');
+    btn.disabled = false; btn.innerHTML = originalHtml;
+    toast('success', `Payment via ${paymentMethodNames[selectedPaymentMethod]} initiated`, 'Redirecting to SkyStreet · Complete securely');
+  }, 1200);
+});
+$('#download-receipt-btn').addEventListener('click', () => {
+  $('#modal-receipt').classList.remove('show');
+  toast('success', 'Receipt downloaded', 'Saved to your device');
+});
+document.addEventListener('click', e => {
+  if (e.target.matches('[data-close]') || e.target.closest('[data-close]')) {
+    $$('.modal-backdrop').forEach(m => m.classList.remove('show'));
+  }
+  if (e.target.classList.contains('modal-backdrop')) e.target.classList.remove('show');
+  if (e.target.classList.contains('toggle')) {
+    e.target.classList.toggle('on');
+    toast('success', e.target.classList.contains('on') ? 'Enabled' : 'Disabled');
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $$('.modal-backdrop').forEach(m => m.classList.remove('show')); });
+$('#support-form').addEventListener('submit', e => {
+  e.preventDefault(); e.target.reset();
+  toast('success', 'Ticket submitted', 'We\'ll respond within 24 hours');
+});
+
+
+// PAYMENT METHOD SELECTION
+let selectedPaymentMethod = 'upi';
+const paymentMethodNames = { upi: 'UPI', card: 'Card', netbanking: 'Net Banking', wallet: 'Wallet' };
+
+document.addEventListener('click', e => {
+  const methodBtn = e.target.closest('.payment-method');
+  if (methodBtn) {
+    $$('.payment-method').forEach(m => m.classList.remove('selected'));
+    methodBtn.classList.add('selected');
+    selectedPaymentMethod = methodBtn.dataset.method;
+    // Hide all forms, show selected
+    $$('.payment-detail-form').forEach(f => f.classList.remove('show'));
+    const form = $(`#form-${selectedPaymentMethod}`);
+    if (form) form.classList.add('show');
+    // Update modal summary
+    $('#pay-modal-method').textContent = paymentMethodNames[selectedPaymentMethod];
+  }
+});
+
+// Init
+renderEmis();
+setState('active');
+// Set initial state button styles
+$$('.state-btn').forEach(b => { if (b.classList.contains('active')) { b.style.background = 'var(--ink)'; b.style.color = 'white'; } });
+</script>
+</body>
+</html>
